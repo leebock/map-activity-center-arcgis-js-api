@@ -1,4 +1,26 @@
-(function () {
+require(
+[
+	"esri/Map", 
+	"esri/views/MapView", 
+	"esri/layers/GraphicsLayer", 
+	"esri/Graphic", 
+	"esri/geometry/Point",
+	"esri/geometry/SpatialReference",
+	"esri/symbols/SimpleMarkerSymbol",
+	"esri/symbols/SimpleLineSymbol",
+	"esri/geometry/Extent"
+],	 
+function(
+	Map, 
+	MapView, 
+	GraphicsLayer, 
+	Graphic, 
+	Point, 
+	SpatialReference, 
+	SimpleMarkerSymbol, 
+	SimpleLineSymbol,
+	Extent
+	) {
 
 	"use strict";
 
@@ -47,6 +69,8 @@
 
         // create map
 
+		
+		/*	
         var _map = L.map(
                 "map", 
                 {center: [40, -95], zoom: 2, zoomControl: false, attributionControl: false}
@@ -55,31 +79,27 @@
             .addControl(L.control.zoom({position: "topright"}))
             .addControl(L.control.attribution({position: "bottomleft"}))
 			.on("click", map_onClick);
-            
-        // override the methods called when zoom control buttons are clicked.  doing this
-        // in order to account for padding due to absolutely positioned div#controls
-
-        _map.zoomIn = function(){
-            this.setView(
-                calcOffsetCenter(this.getCenter(), this.getZoom()+1, getPadding()),
-                this.getZoom()+1
-            );
-        };
-
-        _map.zoomOut = function(){
-            this.setView(
-                calcOffsetCenter(this.getCenter(), this.getZoom()-1, getPadding()),
-                this.getZoom()-1
-            );
-        };
-
+        */
+		var _layerMarkers = new GraphicsLayer();
+		loadMarkers();
+		var _map = new Map({basemap: "streets"});
+		var _view = new MapView({
+			map: _map, 
+			container: "map", 
+			center: new Point(-95, 40),
+			scale: 60000000
+		});		
+		
         // load markers
-        
+
+		/*
         var _layerMarkers = L.featureGroup().addTo(_map).on("click", marker_onClick);
-        loadMarkers();
-
+		*/
+		
+		_map.add(_layerMarkers);
+		
         // zoom to initial extent
-
+		/*
         L.easyButton({
             states:[
                 {
@@ -92,15 +112,22 @@
             ],
             position: "topright"
         }).addTo(_map);			        
-        _map.fitBounds(_layerMarkers.getBounds(), getPadding());
-        
+        */
+		_view.padding = getPadding();
+		_view.extent = _layerMarkers.extent;
+		_view.ui.move("zoom", "top-right");
+		
+		$(".esri-ui .esri-attribution").css("left", -300);
+		
+		/*
 		function map_onClick()
 		{
 			_table.clearActive();
 			loadMarkers();
 			_map.fitBounds(_layerMarkers.getBounds(), getPadding());
 		}
-		
+		*/
+		/*
 		function marker_onClick(e)
 		{
 			var data = e.layer.properties;
@@ -116,10 +143,11 @@
 				function(layer){return layer.properties === data;}
 			).shift().openPopup();
 		}
-		
+		*/
         // table event handlers
 
         function table_onItemActivate(event, data, reset) {
+			/*
             loadMarkers();
             if (reset) {
                 _map.fitBounds(_layerMarkers.getBounds(), getPadding());
@@ -132,10 +160,12 @@
                     _layerMarkers.getLayers(), 
                     function(layer){return layer.properties === data;}
                 ).shift().openPopup();
-            }            
+            } 
+			*/           
         }
         
         function table_onItemHide(event) {
+			/*
             loadMarkers();
             if (_table.getVisibleRecords().length === 1) {
 				var data = _table.getVisibleRecords().shift();
@@ -146,16 +176,28 @@
             } else {
                 _map.fitBounds(_layerMarkers.getBounds(), getPadding());
             }
+			*/
         }
 
         /************************** Functions ****************************/
-        
         function loadMarkers()
         {
-            _layerMarkers.clearLayers();
+			_layerMarkers.removeAll();
+			var symbol = new SimpleMarkerSymbol({
+				style: "square",
+				color: "blue",
+				size: "8px",  // pixels
+				outline:  new SimpleLineSymbol({color: [ 255, 255, 0 ], width: 3})
+			});
             $.each(
                 _table.getVisibleRecords(),
                 function(index, data) {
+					var graphic = new Graphic({
+						geometry: new Point(data.latLng[1], data.latLng[0]), 
+						symbol: symbol
+					});
+					_layerMarkers.add(graphic);
+					/*
                     var marker = L.marker(data.latLng)
                         .addTo(_layerMarkers)
                         .bindPopup(data.name,{closeButton: false})
@@ -164,10 +206,11 @@
                     if (_table.getActive() && data !== _table.getActive()) {
 						marker.setOpacity(0.5);
 					}
+					*/
                 }
             );
         }
-        
+		/*
         function calcOffsetCenter(center, targetZoom, paddingOptions)
         {
             var targetPoint = _map.project(center, targetZoom);
@@ -184,23 +227,22 @@
             }
             return _map.unproject(targetPoint, targetZoom);
         }
-        
+        */
         // helper function    
-        
+
         function getPadding()
         {
             return {
-                paddingTopLeft: [
-                    $("div#controls").outerWidth() + parseInt($("div#controls").position().left),
-                    24
-                ], 
-                paddingBottomRight: [
-                    40,
-                    $("#map").height() - $("div#octopodes").position().top
-                ]
+                left: $("div#controls").outerWidth() + parseInt($("div#controls").position().left),
+				top: 0,
+                right: 0,
+                bottom: 93 /*$("div#octopodes").outerHeight() + 10*/
             };
         }
+
         
     });
 
-})();
+} 
+
+);
