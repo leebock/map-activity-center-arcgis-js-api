@@ -43,21 +43,36 @@ function(
 		
 		_table.load($.map(CITIES, function(value){return {record: value, html: value.name};}));
                 
+		$("button#rate").click(
+			function() {
+				$("div#modal").css("display", "flex");
+				$("div.noUi-handle.noUi-handle-lower").focus();
+			}
+		);
+		$("div#modal button#cancel").click(function(){$("div#modal").css("display", "none");});
+		$("div#modal button#apply").click(
+			function(){
+				$("div#modal").css("display", "none");
+				$("button#rate").empty();
+				for (var i=0; i<parseInt(slider.noUiSlider.get(0)); i++) {
+					$("button#rate").append($("<div>").addClass("octopus"));
+				}
+			}
+		);
+		        
         noUiSlider.create(
             $("div#slider").get(0), 
-            {start: [1], range: {'min': 1,'max': 11}, step: 1}
+            {start: [1], range: {'min': 1,'max': 5}, step: 1}
         );    
-		$("div#octopodes label:last-child").text(parseInt(slider.noUiSlider.get(0)));
 		for (var i=0; i < slider.noUiSlider.options.range.max; i++) {
-			$("div#octopodes div#lower").append($("<img>").attr("src", "resources/octopus.png"));
+			$("div#octopodes").append($("<img>").attr("src", "resources/octopus.png"));
 		}
-		$("div#octopodes div#lower img:nth-of-type(1)").show();
+		$("div#octopodes img:nth-of-type(1)").show();
         slider.noUiSlider.on(
             "slide", 
             function(values){
-				$("div#octopodes label:last-child").text(parseInt(values[0]));
 				$.each(
-					$("div#octopodes div#lower img"),
+					$("div#octopodes img"),
 					function(index, value) {
 						$(value).css("display", index < parseInt(values[0]) ? "block" : "none");
 					}

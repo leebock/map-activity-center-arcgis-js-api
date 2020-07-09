@@ -29,57 +29,97 @@ section div#map {
   flex: 1;
 }
 
-section div#octopodes, section div#controls {
+section button#rate {
   position: absolute;
-  z-index: 2000;
-  border: solid;
-  border-width: 1px; 
-  background: rgba(255, 255, 255, 0.75);
-}
-
-section div#octopodes {
-  bottom: 20px;
+  padding: 5px;
+  bottom: 15px;
   right: 10px;
-  padding: 10px;
-  width: 340px;
+  z-index: 1000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
-section div#octopodes div#upper {
-  display: flex;
+section button#rate:before {
+  content: "Rate this app!";
+}
+
+section button#rate div.octopus {
+  margin-left: 10px;
+  width: 24px;
+  height: 24px;
+  background-image: url("resources/octopus.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+section div#modal {
+  position: absolute;
+  background-color: rgba(255,255,255,0.6);
+  z-index: 2000;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
   align-items: center;  
 }
 
-section div#octopodes div#upper label:first-child {
-  margin-right: 20px;
+section div#modal div#inner {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255,255,255,0.8);
+  box-sizing: border-box;
+  border: solid;
+  border-width: 1px;
+  padding: 30px;
+  width: 300px;
 }
 
-section div#octopodes div#upper div#slider {
-  flex: 1;
+section div#modal button {
+  cursor: pointer;
 }
 
-section div#octopodes div#upper label:last-child {
-  margin-left: 30px;
-  font-size: 30px;
-  width: 40px;
-  text-align: center;
+section div#modal button#cancel {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 20px;
 }
 
-section div#octopodes div#lower {
+section div#modal button#apply   {
+  align-self: center;
+}
+
+section div#modal label {
+  margin-bottom: 20px;
+}
+
+section div#modal div#octopodes {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
-section div#octopodes div#lower img {
+section div#modal div#octopodes img {
   display: none;
   width: 24px;
   margin-right: 2px;
 }
 
-section div#octopodes div#lower img:last-of-type {
+section div#modal div#octopodes img:last-of-type {
   margin-right: 0px;
 }
 
 section div#controls {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.75);  
+  border: solid;
+  border-width: 1px; 
+  z-index: 1000;
   top: 10px;
   left: 10px;
   padding: 30px;
