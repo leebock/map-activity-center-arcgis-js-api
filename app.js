@@ -6,8 +6,7 @@ require(
 	"esri/Graphic", 
 	"esri/geometry/Point",
 	"esri/geometry/SpatialReference",
-	"esri/symbols/SimpleMarkerSymbol",
-	"esri/symbols/SimpleLineSymbol",
+	"esri/symbols/PictureMarkerSymbol",
 	"esri/geometry/Extent",
 	"esri/widgets/Attribution"
 ],	 
@@ -18,8 +17,7 @@ function(
 	Graphic, 
 	Point, 
 	SpatialReference, 
-	SimpleMarkerSymbol, 
-	SimpleLineSymbol,
+	PictureMarkerSymbol, 
 	Extent,
 	Attribution
 	) {
@@ -185,11 +183,9 @@ function(
         function loadMarkers()
         {
 			_layerMarkers.removeAll();
-			var symbol = new SimpleMarkerSymbol({
-				style: "square",
-				color: "blue",
-				size: "8px",  // pixels
-				outline:  new SimpleLineSymbol({color: [ 255, 255, 0 ], width: 3})
+			var symbol = new PictureMarkerSymbol({
+				url: "resources/marker-icon.png", 
+				width: 18, height: 30, xoffset: -1, yoffset: 14
 			});
             $.each(
                 _table.getVisibleRecords(),
