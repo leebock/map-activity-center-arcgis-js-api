@@ -8,7 +8,8 @@ require(
 	"esri/geometry/SpatialReference",
 	"esri/symbols/SimpleMarkerSymbol",
 	"esri/symbols/SimpleLineSymbol",
-	"esri/geometry/Extent"
+	"esri/geometry/Extent",
+	"esri/widgets/Attribution"
 ],	 
 function(
 	Map, 
@@ -19,7 +20,8 @@ function(
 	SpatialReference, 
 	SimpleMarkerSymbol, 
 	SimpleLineSymbol,
-	Extent
+	Extent,
+	Attribution
 	) {
 
 	"use strict";
@@ -116,8 +118,8 @@ function(
 		_view.padding = getPadding();
 		_view.extent = _layerMarkers.extent;
 		_view.ui.move("zoom", "top-right");
-		
-		$(".esri-ui .esri-attribution").css("left", -300);
+		_view.ui.remove("attribution");
+		new Attribution({view: _view, container: $("div#my-attribution").get(0)});
 		
 		/*
 		function map_onClick()
