@@ -257,7 +257,7 @@ function(
                 left: $("div#controls").outerWidth() + parseInt($("div#controls").position().left),
 				top: 0,
                 right: 0,
-                bottom: 93 /*$("div#octopodes").outerHeight() + 10*/
+                bottom: $("div#map").outerHeight() - $("button#rate").position().top /*$("div#octopodes").outerHeight() + 10*/
             };
         }
 
