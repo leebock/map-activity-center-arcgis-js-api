@@ -117,6 +117,14 @@ function(
 		_view.extent = _layerMarkers.extent;
 		_view.ui.move("zoom", "top-right");
 		_view.ui.remove("attribution");
+		$("<div>")
+			.attr("id", "my-attribution")
+			.css("position", "absolute")
+			.css("left", "0px")
+			.css("bottom", "0px")
+			.css("background", "rgba(255,255,255,0.8)")
+			.css("z-index", 5000)
+			.appendTo($("section"));
 		new Attribution({view: _view, container: $("div#my-attribution").get(0)});
 		
 		/*

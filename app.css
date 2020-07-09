@@ -168,11 +168,3 @@ section div#controls ul li button.hide {
 section div#controls ul li.selected button.hide {
   display: block;
 }
-
-section div#my-attribution {
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
-  background: rgba(255,255,255,0.8);
-  z-index: 5000;
-}
