@@ -91,13 +91,7 @@ function(
 
         /********** All map specific stuff below this line *****************/
 
-        // create map
-
-		
-		/*
-        var _layerMarkers = L.featureGroup().addTo(_map).on("click", marker_onClick);
-		*/
-		// load markers
+        // create map & layer, then load the graphics
 
 		var _map = new Map({basemap: "streets"});
 		var _layerMarkers = new GraphicsLayer();		
@@ -107,7 +101,7 @@ function(
 		// create and configure view
 		
 		var _view = new MapView({map: _map, container: "map", viewpoint: VIEWPOINT_HOME});
-		_view.on("click", map_onClick);
+		_view.on("click", view_onClick);
 		_view.padding = getPadding();
 		_view.popup.visibleElements = {closeButton: false};
 		_view.ui.move("zoom", "top-right");
@@ -124,32 +118,31 @@ function(
 			.css("background", "rgba(255,255,255,0.8)")
 			.css("z-index", 5000)
 			.appendTo($("section"));
+			
 		new Attribution({view: _view, container: $("div#my-attribution").get(0)});
 		
-		function map_onClick()
+		function view_onClick(event)
 		{
-			_table.clearActive();
-			loadMarkers();
-			_view.goTo(VIEWPOINT_HOME, {duration: 1000});
-		}
-
-		/*
-		function marker_onClick(e)
-		{
-			var data = e.layer.properties;
-			$(".leaflet-tooltip").remove();			
-			_table.activate(data);
-			loadMarkers();
-			_map.flyToBounds(
-				L.latLng(data.latLng).toBounds(2000000), 
-				getPadding()
+			_view.hitTest(event).then(
+				function(response) {
+					if (response.results.length === 0) {
+						_table.clearActive();
+						loadMarkers();
+						_view.goTo(VIEWPOINT_HOME, {duration: 1000});
+					} else {
+						var data = response.results.shift().graphic.attributes;
+						_table.activate(data);
+						loadMarkers();
+						var targetPoint = new Point(data.latLng.slice().reverse());
+						_view.goTo(
+							new Viewpoint({targetGeometry: targetPoint, scale: 30000000}),
+							{duration: 1000}
+						);
+						_view.popup.open({location: targetPoint, content: data.name});
+					}
+				}
 			);
-			$.grep(
-				_layerMarkers.getLayers(), 
-				function(layer){return layer.properties === data;}
-			).shift().openPopup();
 		}
-		*/
 		
         // table event handlers
 
@@ -185,6 +178,7 @@ function(
         }
 
         /************************** Functions ****************************/
+
         function loadMarkers()
         {
 			_layerMarkers.removeAll();
@@ -193,8 +187,8 @@ function(
 				width: 18, height: 30, xoffset: -1, yoffset: 14
 			});
 			var tiny = new PictureMarkerSymbol({
-				url: "resources/marker-icon.png", 
-				width: 9, height: 15, xoffset: 0, yoffset: 7
+				url: "resources/marker-icon-faded.png", 
+				width: 18, height: 30, xoffset: -1, yoffset: 14
 			});
             $.each(
                 _table.getVisibleRecords(),
