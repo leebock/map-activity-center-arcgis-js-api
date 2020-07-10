@@ -169,18 +169,19 @@ function(
         }
         
         function table_onItemHide(event) {
-			/*
             loadMarkers();
             if (_table.getVisibleRecords().length === 1) {
 				var data = _table.getVisibleRecords().shift();
-                _map.flyToBounds(
-                    L.latLng(data.latLng).toBounds(2000000), 
-                    getPadding()
-                );
+				var targetPoint = new Point(data.latLng.slice().reverse());
+				_view.goTo(
+					new Viewpoint({targetGeometry: targetPoint, scale: 30000000}),
+					{duration: 1000}
+				);
+				_view.popup.open({location: targetPoint, content: data.name});
             } else {
-                _map.fitBounds(_layerMarkers.getBounds(), getPadding());
+				_view.popup.close();
+				_view.goTo(VIEWPOINT_HOME, {duration: 1000});
             }
-			*/
         }
 
         /************************** Functions ****************************/
