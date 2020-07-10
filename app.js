@@ -8,7 +8,8 @@ require(
 	"esri/geometry/SpatialReference",
 	"esri/symbols/PictureMarkerSymbol",
 	"esri/geometry/Extent",
-	"esri/widgets/Attribution"
+	"esri/widgets/Attribution",
+	"esri/Viewpoint"
 ],	 
 function(
 	Map, 
@@ -19,7 +20,8 @@ function(
 	SpatialReference, 
 	PictureMarkerSymbol, 
 	Extent,
-	Attribution
+	Attribution,
+	Viewpoint
 	) {
 
 	"use strict";
@@ -84,18 +86,8 @@ function(
 
         // create map
 
-		
-		/*	
-        var _map = L.map(
-                "map", 
-                {center: [40, -95], zoom: 2, zoomControl: false, attributionControl: false}
-            )
-            .addLayer(L.esri.basemapLayer("Streets"))
-            .addControl(L.control.zoom({position: "topright"}))
-            .addControl(L.control.attribution({position: "bottomleft"}))
-			.on("click", map_onClick);
-        */
 		var _layerMarkers = new GraphicsLayer();
+
 		loadMarkers();
 		var _map = new Map({basemap: "streets"});
 		var _view = new MapView({
@@ -103,7 +95,9 @@ function(
 			container: "map", 
 			center: new Point(-95, 40),
 			scale: 60000000
-		});		
+		});
+		_view.on("click", map_onClick);
+		_view.popup.visibleElements = {closeButton: false};
 		
         // load markers
 
@@ -129,7 +123,7 @@ function(
         }).addTo(_map);			        
         */
 		_view.padding = getPadding();
-		_view.extent = _layerMarkers.extent;
+		//_view.extent = _layerMarkers.extent;
 		_view.ui.move("zoom", "top-right");
 		_view.ui.remove("attribution");
 		$("<div>")
@@ -142,14 +136,20 @@ function(
 			.appendTo($("section"));
 		new Attribution({view: _view, container: $("div#my-attribution").get(0)});
 		
-		/*
+
 		function map_onClick()
 		{
 			_table.clearActive();
 			loadMarkers();
-			_map.fitBounds(_layerMarkers.getBounds(), getPadding());
+			_view.goTo(
+				new Viewpoint({
+					targetGeometry: new Point(-95, 40),
+					scale: 60000000
+				}),
+				{duration: 1000}
+			);
 		}
-		*/
+
 		/*
 		function marker_onClick(e)
 		{
@@ -170,21 +170,27 @@ function(
         // table event handlers
 
         function table_onItemActivate(event, data, reset) {
-			/*
-            loadMarkers();
-            if (reset) {
-                _map.fitBounds(_layerMarkers.getBounds(), getPadding());
+			loadMarkers();
+			if (reset) {
+				_view.popup.close();
+				_view.goTo(
+					new Viewpoint({
+						targetGeometry: new Point(-95, 40),
+						scale: 60000000
+					}),
+					{duration: 1000}
+				);
             } else {
-                _map.flyToBounds(
-                    L.latLng(data.latLng).toBounds(2000000), 
-                    getPadding()
-                );
-                $.grep(
-                    _layerMarkers.getLayers(), 
-                    function(layer){return layer.properties === data;}
-                ).shift().openPopup();
-            } 
-			*/           
+				var targetPoint = new Point(data.latLng.slice().reverse());
+				_view.goTo(
+					new Viewpoint({
+						targetGeometry: targetPoint,
+						scale: 30000000
+					}),
+					{duration: 1000}
+				);
+				_view.popup.open({location: targetPoint, content: data.name});
+			}
         }
         
         function table_onItemHide(event) {
@@ -210,45 +216,23 @@ function(
 				url: "resources/marker-icon.png", 
 				width: 18, height: 30, xoffset: -1, yoffset: 14
 			});
+			var tiny = new PictureMarkerSymbol({
+				url: "resources/marker-icon.png", 
+				width: 9, height: 15, xoffset: 0, yoffset: 7
+			});
             $.each(
                 _table.getVisibleRecords(),
                 function(index, data) {
 					var graphic = new Graphic({
 						geometry: new Point(data.latLng[1], data.latLng[0]), 
-						symbol: symbol
+						symbol: _table.getActive() && data !== _table.getActive() ? tiny : symbol,
+						attributes: data
 					});
 					_layerMarkers.add(graphic);
-					/*
-                    var marker = L.marker(data.latLng)
-                        .addTo(_layerMarkers)
-                        .bindPopup(data.name,{closeButton: false})
-                        .bindTooltip(data.name);
-                    marker.properties = data;  
-                    if (_table.getActive() && data !== _table.getActive()) {
-						marker.setOpacity(0.5);
-					}
-					*/
                 }
             );
         }
-		/*
-        function calcOffsetCenter(center, targetZoom, paddingOptions)
-        {
-            var targetPoint = _map.project(center, targetZoom);
-            if (targetZoom < _map.getZoom()) {
-                targetPoint = targetPoint.subtract([
-                    (paddingOptions.paddingTopLeft[0] - paddingOptions.paddingBottomRight[0])/4,
-                    (paddingOptions.paddingTopLeft[1] - paddingOptions.paddingBottomRight[1])/4
-                ]);
-            } else {                
-                targetPoint = targetPoint.add([
-                    (paddingOptions.paddingTopLeft[0] - paddingOptions.paddingBottomRight[0])/2,
-                    (paddingOptions.paddingTopLeft[1] - paddingOptions.paddingBottomRight[1])/2
-                ]);
-            }
-            return _map.unproject(targetPoint, targetZoom);
-        }
-        */
+
         // helper function    
 
         function getPadding()
@@ -257,7 +241,7 @@ function(
                 left: $("div#controls").outerWidth() + parseInt($("div#controls").position().left),
 				top: 0,
                 right: 0,
-                bottom: $("div#map").outerHeight() - $("button#rate").position().top /*$("div#octopodes").outerHeight() + 10*/
+                bottom: $("div#map").outerHeight() - $("button#rate").position().top
             };
         }
 
