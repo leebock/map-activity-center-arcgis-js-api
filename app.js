@@ -9,7 +9,8 @@ require(
 	"esri/symbols/PictureMarkerSymbol",
 	"esri/geometry/Extent",
 	"esri/widgets/Attribution",
-	"esri/Viewpoint"
+	"esri/Viewpoint",
+	"esri/widgets/Home"
 ],	 
 function(
 	Map, 
@@ -21,7 +22,8 @@ function(
 	PictureMarkerSymbol, 
 	Extent,
 	Attribution,
-	Viewpoint
+	Viewpoint,
+	Home
 	) {
 
 	"use strict";
@@ -35,6 +37,11 @@ function(
           {name: "NYC", latLng: [40.78, -73.96]},
           {name: "Miami", latLng: [25.79, -80.21]}
         ];
+		
+		var VIEWPOINT_HOME = new Viewpoint({
+			targetGeometry: new Point(-95, 40),
+			scale: 60000000
+		});
         
         // build out UI (this part should be map library independent)
 		
@@ -86,46 +93,29 @@ function(
 
         // create map
 
-		var _layerMarkers = new GraphicsLayer();
-
-		loadMarkers();
-		var _map = new Map({basemap: "streets"});
-		var _view = new MapView({
-			map: _map, 
-			container: "map", 
-			center: new Point(-95, 40),
-			scale: 60000000
-		});
-		_view.on("click", map_onClick);
-		_view.popup.visibleElements = {closeButton: false};
 		
-        // load markers
-
 		/*
         var _layerMarkers = L.featureGroup().addTo(_map).on("click", marker_onClick);
 		*/
-		
+		// load markers
+
+		var _map = new Map({basemap: "streets"});
+		var _layerMarkers = new GraphicsLayer();		
 		_map.add(_layerMarkers);
+		loadMarkers();
+
+		// create and configure view
 		
-        // zoom to initial extent
-		/*
-        L.easyButton({
-            states:[
-                {
-                    icon: "fa fa-home",
-                    onClick: function(btn, map){
-                        _map.fitBounds(_layerMarkers.getBounds(), getPadding());
-                    },
-                    title: "Full extent"
-                }
-            ],
-            position: "topright"
-        }).addTo(_map);			        
-        */
+		var _view = new MapView({map: _map, container: "map", viewpoint: VIEWPOINT_HOME});
+		_view.on("click", map_onClick);
 		_view.padding = getPadding();
-		//_view.extent = _layerMarkers.extent;
+		_view.popup.visibleElements = {closeButton: false};
 		_view.ui.move("zoom", "top-right");
+		_view.ui.add(new Home({view: _view, viewpoint: VIEWPOINT_HOME}), "top-right");
 		_view.ui.remove("attribution");
+		
+		// create attribution div whose position can be tweaked
+		
 		$("<div>")
 			.attr("id", "my-attribution")
 			.css("position", "absolute")
@@ -136,18 +126,11 @@ function(
 			.appendTo($("section"));
 		new Attribution({view: _view, container: $("div#my-attribution").get(0)});
 		
-
 		function map_onClick()
 		{
 			_table.clearActive();
 			loadMarkers();
-			_view.goTo(
-				new Viewpoint({
-					targetGeometry: new Point(-95, 40),
-					scale: 60000000
-				}),
-				{duration: 1000}
-			);
+			_view.goTo(VIEWPOINT_HOME, {duration: 1000});
 		}
 
 		/*
@@ -167,26 +150,18 @@ function(
 			).shift().openPopup();
 		}
 		*/
+		
         // table event handlers
 
         function table_onItemActivate(event, data, reset) {
 			loadMarkers();
 			if (reset) {
 				_view.popup.close();
-				_view.goTo(
-					new Viewpoint({
-						targetGeometry: new Point(-95, 40),
-						scale: 60000000
-					}),
-					{duration: 1000}
-				);
+				_view.goTo(VIEWPOINT_HOME, {duration: 1000});
             } else {
 				var targetPoint = new Point(data.latLng.slice().reverse());
 				_view.goTo(
-					new Viewpoint({
-						targetGeometry: targetPoint,
-						scale: 30000000
-					}),
+					new Viewpoint({targetGeometry: targetPoint, scale: 30000000}),
 					{duration: 1000}
 				);
 				_view.popup.open({location: targetPoint, content: data.name});
