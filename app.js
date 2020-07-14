@@ -201,8 +201,7 @@ function(
 		
 		function showPopup(title, location)
 		{
-			var width = 100; // opportunity to calculate a width here
-			_sheet.innerHTML = ".esri-view-width-medium .esri-popup__main-container {width: "+width+"px}";
+			_sheet.innerHTML = ".esri-view-width-medium .esri-popup__main-container {width: auto}";
 			_view.popup.dockEnabled = false;
 			_view.popup.open({location: location, content: null, title: title});			
 		}

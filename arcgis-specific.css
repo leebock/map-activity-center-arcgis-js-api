@@ -1,9 +1,31 @@
+.esri-popup__main-container {
+  /*background: red;*/
+}
+
 .esri-view-width-medium .esri-popup__main-container {
-  text-align: center;
+  display: flex;
 }
 
 .esri-ui .esri-popup {
   margin-bottom: 32px;
+}
+
+.esri-popup__header {
+  /*background: orange;*/
+  display: block;
+}
+
+.esri-popup__header-container {
+  /*background: cyan;*/
+  padding-right: 6px;
+}
+
+.esri-popup__header-title {
+  /*background: pink;*/
+  padding-top: 7px; 
+  padding-bottom: 7px;
+  padding-right: 7px;
+  padding-left: 7px;
 }
 
 div#my-attribution {
