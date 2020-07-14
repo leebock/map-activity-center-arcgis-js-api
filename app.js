@@ -41,7 +41,9 @@ function(
 		var VIEWPOINT_HOME = new Viewpoint({
 			targetGeometry: new Extent({xmin: -122.34, ymin: 25.79, xmax: -73.96, ymax: 47.61}),
 		});
-        
+
+		var _sheet = document.createElement('style');
+		document.body.appendChild(_sheet);			        
         // build out UI (this part should be map library independent)
 		
 		var _table = $(new Table($("div#controls ul").get(0)))
@@ -50,7 +52,7 @@ function(
 		   .get(0);		
 		
 		_table.load($.map(CITIES, function(value){return {record: value, html: value.name};}));
-                
+
 		$("button#rate").click(
 			function() {
 				$("div#modal").css("display", "flex");
@@ -206,9 +208,10 @@ function(
 		
 		function showPopup(title, location)
 		{
+			var width = 100; // opportunity to calculate a width here
+			_sheet.innerHTML = ".esri-view-width-medium .esri-popup__main-container {width: "+width+"px}";
 			_view.popup.dockEnabled = false;
-			_view.popup.open({location: location, content: null, title: title});
-			$(".esri-ui .esri-popup").css("margin-bottom", "32px");
+			_view.popup.open({location: location, content: null, title: title});			
 		}
 
         // helper function    
