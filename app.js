@@ -103,6 +103,9 @@ function(
 		_view.on("click", view_onClick);
 		_view.goTo(VIEWPOINT_HOME); // establish viewpoint after padding
 		_view.popup.visibleElements = {closeButton: false};
+		_view.popup.dockOptions.buttonEnabled = false;
+		_view.popup.actions.removeAll();
+		_view.popup.alignment = "top-center";
 		_view.ui.move("zoom", "top-right");
 		_view.ui.add(new Home({view: _view, viewpoint: VIEWPOINT_HOME}), "top-right");
 		_view.ui.remove("attribution");
@@ -135,9 +138,8 @@ function(
 						var targetPoint = new Point(data.latLng.slice().reverse());
 						_view.goTo(
 							new Viewpoint({targetGeometry: targetPoint, scale: 30000000}),
-							{duration: 1000}
-						);
-						_view.popup.open({location: targetPoint, content: data.name});
+							{duration: 500}
+						).then(function(){showPopup(data.name, targetPoint);});
 					}
 				}
 			);
@@ -156,7 +158,7 @@ function(
 					new Viewpoint({targetGeometry: targetPoint, scale: 30000000}),
 					{duration: 1000}
 				);
-				_view.popup.open({location: targetPoint, content: data.name});
+				showPopup(data.name, targetPoint);
 			}
         }
         
@@ -169,7 +171,7 @@ function(
 					new Viewpoint({targetGeometry: targetPoint, scale: 30000000}),
 					{duration: 1000}
 				);
-				_view.popup.open({location: targetPoint, content: data.name});
+				showPopup(data.name, targetPoint);
             } else {
 				_view.popup.close();
 				_view.goTo(VIEWPOINT_HOME, {duration: 1000});
@@ -201,6 +203,13 @@ function(
                 }
             );
         }
+		
+		function showPopup(title, location)
+		{
+			_view.popup.dockEnabled = false;
+			_view.popup.open({location: location, content: null, title: title});
+			$(".esri-ui .esri-popup").css("margin-bottom", "32px");
+		}
 
         // helper function    
 
