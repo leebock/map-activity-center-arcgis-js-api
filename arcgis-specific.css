@@ -5,3 +5,11 @@
 .esri-ui .esri-popup {
   margin-bottom: 32px;
 }
+
+div#my-attribution {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  background: rgba(255,255,255,0.8);
+  z-index: 5000;
+}

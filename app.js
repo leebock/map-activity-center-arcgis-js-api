@@ -114,14 +114,7 @@ function(
 		
 		// create attribution div whose position can be tweaked
 		
-		$("<div>")
-			.attr("id", "my-attribution")
-			.css("position", "absolute")
-			.css("left", "0px")
-			.css("bottom", "0px")
-			.css("background", "rgba(255,255,255,0.8)")
-			.css("z-index", 5000)
-			.appendTo($("section"));
+		$("<div>").attr("id", "my-attribution").appendTo($("section"));
 			
 		new Attribution({view: _view, container: $("div#my-attribution").get(0)});
 		
@@ -225,8 +218,7 @@ function(
                 bottom: $("div#map").outerHeight() - $("button#rate").position().top
             };
         }
-
-        
+		
     });
 
 } 
