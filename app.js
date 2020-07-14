@@ -39,8 +39,7 @@ function(
         ];
 		
 		var VIEWPOINT_HOME = new Viewpoint({
-			targetGeometry: new Point(-95, 40),
-			scale: 60000000
+			targetGeometry: new Extent({xmin: -122.34, ymin: 25.79, xmax: -73.96, ymax: 47.61}),
 		});
         
         // build out UI (this part should be map library independent)
@@ -100,9 +99,9 @@ function(
 
 		// create and configure view
 		
-		var _view = new MapView({map: _map, container: "map", viewpoint: VIEWPOINT_HOME});
+		var _view = new MapView({map: _map, container: "map", padding: getPadding()});
 		_view.on("click", view_onClick);
-		_view.padding = getPadding();
+		_view.goTo(VIEWPOINT_HOME); // establish viewpoint after padding
 		_view.popup.visibleElements = {closeButton: false};
 		_view.ui.move("zoom", "top-right");
 		_view.ui.add(new Home({view: _view, viewpoint: VIEWPOINT_HOME}), "top-right");
