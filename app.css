@@ -1,3 +1,11 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 html, body {
   height: 100%;
   margin: 0px;
@@ -71,7 +79,6 @@ section div#modal > div#inner {
   display: flex;
   flex-direction: column;
   background-color: rgba(255, 255, 255, 0.8);
-  box-sizing: border-box;
   border: solid;
   border-width: 1px;
   padding: 30px;
@@ -118,7 +125,6 @@ section div#controls {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  box-sizing: border-box;
   width: 300px;
   max-height: calc(100% - 35px);
   overflow: hidden;
