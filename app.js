@@ -37,13 +37,7 @@ function(
           {name: "NYC", latLng: [40.78, -73.96]},
           {name: "Miami", latLng: [25.79, -80.21]}
         ];
-		
-		var VIEWPOINT_HOME = new Viewpoint({
-			targetGeometry: new Extent({xmin: -122.34, ymin: 25.79, xmax: -73.96, ymax: 47.61}),
-		});
 
-		var _sheet = document.createElement('style');
-		document.body.appendChild(_sheet);			        
         // build out UI (this part should be map library independent)
 		
 		var _table = $(new Table($("div#controls ul").get(0)))
@@ -91,6 +85,14 @@ function(
         );
 
         /********** All map specific stuff below this line *****************/
+
+		
+		var VIEWPOINT_HOME = new Viewpoint({
+			targetGeometry: new Extent({xmin: -122.34, ymin: 25.79, xmax: -73.96, ymax: 47.61}),
+		});
+
+		var _sheet = document.createElement('style');
+		document.body.appendChild(_sheet);			        
 
         // create map & layer, then load the graphics
 
