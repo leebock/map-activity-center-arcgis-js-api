@@ -88,7 +88,7 @@ function(
 
 		
 		var VIEWPOINT_HOME = new Viewpoint({
-			targetGeometry: new Extent({xmin: -122.34, ymin: 25.79, xmax: -73.96, ymax: 47.61}),
+			targetGeometry: new Extent({xmin: -125, ymin: 25.79, xmax: -71, ymax: 47.61}),
 		});
 
 		var _sheet = document.createElement('style');
