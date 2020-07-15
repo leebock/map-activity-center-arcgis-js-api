@@ -105,6 +105,7 @@ function(
 		
 		var _view = new MapView({map: _map, container: "map", padding: getPadding()});
 		_view.on("click", view_onClick);
+		_view.on("pointer-move", view_onPointerMove);
 		_view.goTo(VIEWPOINT_HOME); // establish viewpoint after padding
 		_view.popup.visibleElements = {closeButton: false};
 		_view.popup.dockOptions.buttonEnabled = false;
@@ -137,6 +138,18 @@ function(
 							new Viewpoint({targetGeometry: targetPoint, scale: 30000000}),
 							{duration: 500}
 						).then(function(){showPopup(data.name, targetPoint);});
+					}
+				}
+			);
+		}
+		
+		function view_onPointerMove(event) {
+			_view.hitTest(event).then(
+				function(response) {
+					if (response.results.length > 0) {
+						$("#map").css("cursor", "pointer");
+					} else {
+						$("#map").css("cursor", "default");
 					}
 				}
 			);
