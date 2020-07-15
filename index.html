@@ -54,7 +54,45 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.css">
 	<link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/light/main.css" />		
 	<link rel="stylesheet" href="app.css">	
-	<link rel="stylesheet" href="arcgis-specific.css">	
+	<style>
+		.esri-popup__main-container {
+		  /*background: red;*/
+		}
+		
+		.esri-view-width-medium .esri-popup__main-container {
+		  display: flex;
+		}
+		
+		.esri-ui .esri-popup {
+		  margin-bottom: 32px;
+		}
+		
+		.esri-popup__header {
+		  /*background: orange;*/
+		  display: block;
+		}
+		
+		.esri-popup__header-container {
+		  /*background: cyan;*/
+		  padding-right: 6px;
+		}
+		
+		.esri-popup__header-title {
+		  /*background: pink;*/
+		  padding-top: 7px; 
+		  padding-bottom: 7px;
+		  padding-right: 7px;
+		  padding-left: 7px;
+		}
+		
+		div#my-attribution {
+		  position: absolute;
+		  left: 0px;
+		  bottom: 0px;
+		  background: rgba(255,255,255,0.8);
+		  z-index: 5000;
+		}	
+	</style>	
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.js"></script>	
