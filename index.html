@@ -88,7 +88,60 @@
 		  bottom: 0px;
 		  background: rgba(255,255,255,0.8);
 		  z-index: 5000;
-		}	
+		}
+
+        /* hover tooltip */
+  
+		.tooltip {
+			line-height: 1.3em;
+			font-family: "Avenir Next","Helvetica Neue","Helvetica","Arial","sans-serif";
+			font-size: 12px;
+			background-color: rgba(255,255,255,0.6);
+			position: absolute;
+			pointer-events: none;
+			padding: 5px;
+			box-shadow: 0 1px 4px rgba(0, 0, 0, .8);
+			display: none;
+		}
+
+		.tooltip.upper-right {
+			margin-bottom: 40px;
+			margin-left: 10px;
+		}
+		
+		.tooltip.upper-center {
+			margin-bottom: 40px;
+			transform: translateX(-50%);
+		}
+
+		.tooltip.upper-left {
+			margin-bottom: 40px;
+			transform: translateX(-100%);
+		}
+		
+		.tooltip.center-right {
+			margin-bottom: 10px;
+			margin-left: 20px;
+		}
+
+		.tooltip.center-left {
+			margin-bottom: 10px;
+			margin-left: -20px;
+			transform: translateX(-100%);
+		}
+
+		.tooltip.bottom-left {
+			margin-bottom: -20px;
+			margin-left: -20px;
+			transform: translateX(-100%);
+		}
+
+		.tooltip.bottom-center {
+			margin-bottom: -20px;
+			margin-left: -20px;
+			transform: translateX(-50%);
+		}
+			
 	</style>	
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -96,6 +149,7 @@
 	<script src="https://js.arcgis.com/4.16/"></script>
 	
 	<script src="Table.js"></script>	
+	<script src="Tooltip.js"></script>
 	<script src="app.js"></script>
 	
 </head>

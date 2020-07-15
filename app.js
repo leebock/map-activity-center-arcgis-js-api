@@ -120,11 +120,17 @@ function(
 		$("<div>").attr("id", "my-attribution").appendTo($("section"));
 			
 		new Attribution({view: _view, container: $("div#my-attribution").get(0)});
+
+		// create homemade tooltip
 		
+		var _toolTip = new Tooltip(_view.container);
+							
 		function view_onClick(event)
 		{
 			_view.hitTest(event).then(
 				function(response) {
+					$("#map").css("cursor", "default");
+					$("div.tooltip").hide();
 					if (response.results.length === 0) {
 						_table.clearActive();
 						loadMarkers();
@@ -148,8 +154,16 @@ function(
 				function(response) {
 					if (response.results.length > 0) {
 						$("#map").css("cursor", "pointer");
+						var data = response.results.shift().graphic.attributes;
+						if (data === _table.getActive()) {
+							_toolTip.hide();
+						} else {
+							var screenPoint = _view.toScreen(new Point(data.latLng.slice().reverse()));
+							_toolTip.show(data.name, screenPoint);
+						}
 					} else {
 						$("#map").css("cursor", "default");
+						_toolTip.hide();
 					}
 				}
 			);
