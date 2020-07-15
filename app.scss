@@ -34,6 +34,11 @@ section {
   position: relative;
   margin-bottom: 20px;
   overflow: hidden;
+
+  @media (max-width: 800px) {
+    max-height: none;
+    margin-bottom: 0px;
+  }
   
   div#map {
     flex: 1;
@@ -48,6 +53,13 @@ section {
     cursor: pointer;
     display: flex;
     align-items: center;
+
+    @media (max-width: 800px) {
+      bottom: auto;
+      right: auto;
+      top: 0px;
+      left: 0px;
+    }
 
     &:before {
       content: "Rate this app!";

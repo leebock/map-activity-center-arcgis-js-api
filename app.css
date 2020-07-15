@@ -37,6 +37,12 @@ section {
   /* div#modal */
   /* controls */
 }
+@media (max-width: 800px) {
+  section {
+    max-height: none;
+    margin-bottom: 0px;
+  }
+}
 section div#map {
   flex: 1;
 }
@@ -49,6 +55,14 @@ section button#rate {
   cursor: pointer;
   display: flex;
   align-items: center;
+}
+@media (max-width: 800px) {
+  section button#rate {
+    bottom: auto;
+    right: auto;
+    top: 0px;
+    left: 0px;
+  }
 }
 section button#rate:before {
   content: "Rate this app!";
