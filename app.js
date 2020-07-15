@@ -201,7 +201,9 @@ function(
 		
 		function showPopup(title, location)
 		{
-			_sheet.innerHTML = ".esri-view-width-medium .esri-popup__main-container {width: auto}";
+			_sheet.innerHTML = 
+			".esri-view-width-medium .esri-popup__main-container {width: auto} "+
+			".esri-view-width-less-than-medium .esri-popup__main-container {width: auto}";
 			_view.popup.dockEnabled = false;
 			_view.popup.open({location: location, content: null, title: title});			
 		}
