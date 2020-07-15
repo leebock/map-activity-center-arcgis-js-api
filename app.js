@@ -218,7 +218,7 @@ function(
 			if (parseInt($("div#controls").css("bottom")) === 0) {
 				padding = {
 	                left: 0,
-					top: 0,
+					top: $("button#rate").outerHeight(),
 	                right: 0,
 	                bottom: $("div#controls").outerHeight()
 	            };  
