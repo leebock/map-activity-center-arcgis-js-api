@@ -10,10 +10,6 @@ body {
   align-items: center;
 }
 
-.leaflet-popup-content {
-  text-align: center;
-}
-
 section {
   width: 100%;
   flex: 1;
@@ -23,12 +19,13 @@ section {
   position: relative;
   margin-bottom: 20px;
   overflow: hidden;
+  /* button#rate */
+  /* div#modal */
+  /* controls */
 }
-
 section div#map {
   flex: 1;
 }
-
 section button#rate {
   position: absolute;
   padding: 5px;
@@ -39,12 +36,10 @@ section button#rate {
   display: flex;
   align-items: center;
 }
-
 section button#rate:before {
   content: "Rate this app!";
 }
-
-section button#rate div.octopus {
+section button#rate > div.octopus {
   margin-left: 10px;
   width: 24px;
   height: 24px;
@@ -53,10 +48,9 @@ section button#rate div.octopus {
   background-size: contain;
   background-repeat: no-repeat;
 }
-
 section div#modal {
   position: absolute;
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255, 255, 255, 0.6);
   z-index: 2000;
   top: 0px;
   left: 0px;
@@ -64,61 +58,53 @@ section div#modal {
   height: 100%;
   display: none;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
+  /* div#inner */
 }
-
-section div#modal div#inner {
+section div#modal > div#inner {
   display: flex;
   flex-direction: column;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255, 255, 255, 0.8);
   box-sizing: border-box;
   border: solid;
   border-width: 1px;
   padding: 30px;
   width: 300px;
 }
-
-section div#modal button {
+section div#modal > div#inner > button {
   cursor: pointer;
 }
-
-section div#modal button#cancel {
+section div#modal > div#inner > button#cancel {
   align-self: flex-end;
   background: none;
   border: none;
   font-size: 20px;
 }
-
-section div#modal button#apply   {
+section div#modal > div#inner > button#apply {
   align-self: center;
 }
-
-section div#modal label {
+section div#modal > div#inner > label {
   margin-bottom: 20px;
 }
-
-section div#modal div#octopodes {
+section div#modal > div#inner > div#octopodes {
   margin-top: 20px;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
-
-section div#modal div#octopodes img {
+section div#modal > div#inner > div#octopodes > img {
   display: none;
   width: 24px;
   margin-right: 2px;
 }
-
-section div#modal div#octopodes img:last-of-type {
+section div#modal > div#inner > div#octopodes > img:last-of-type {
   margin-right: 0px;
 }
-
 section div#controls {
   position: absolute;
-  background: rgba(255, 255, 255, 0.75);  
+  background: rgba(255, 255, 255, 0.75);
   border: solid;
-  border-width: 1px; 
+  border-width: 1px;
   z-index: 1000;
   top: 10px;
   left: 10px;
@@ -126,14 +112,13 @@ section div#controls {
   display: flex;
   flex-direction: column;
   width: 300px;
+  /* ul */
 }
-
-section div#controls h3 {
+section div#controls > h3 {
   margin-top: 5px;
   margin-bottom: 10px;
 }
-
-section div#controls ul {
+section div#controls > ul {
   list-style-type: none;
   -webkit-margin-before: 0px;
   -webkit-margin-after: 0px;
@@ -144,57 +129,38 @@ section div#controls ul {
   -moz-margin-end: 0px;
   -moz-padding-start: 0px;
   -moz-padding-end: 0px;
+  /* li */
 }
-
-section div#controls ul li {
+section div#controls > ul > li {
   display: flex;
-  background-color: rgba(43,130,203,1);
+  background-color: #2b82cb;
   border-style: solid;
   border-width: 1px;
-  border-color: rgba(43,130,203,1); 
+  border-color: #2b82cb;
   border-radius: 3px;
   margin-bottom: 5px;
   padding: 3px;
   align-items: center;
+  /* button */
 }
-
-section div#controls ul li.ghosted {
-  background-color: rgba(43,130,203,0.5);
-}
-
-section div#controls ul li:hover {
-  background-color: rgba(43,130,203,0.9);
-  border-color: white;
-}
-
-section div#controls ul li.selected {
-  background-color: rgba(43,130,203,1);
-}
-
-section div#controls ul li.hidden {
-  display: none;
-}
-
-section div#controls ul li button {
+section div#controls > ul > li > button {
   cursor: pointer;
   color: white;
   border: none;
+  /* button.hide */
 }
-
-section div#controls ul li button:focus {
-  outline-color: rgba(255,255,255,0.8);
+section div#controls > ul > li > button:focus {
+  outline-color: rgba(255, 255, 255, 0.8);
   outline-style: solid;
   outline-width: 2px;
 }
-
-section div#controls ul li > button:nth-of-type(1) {
+section div#controls > ul > li > button:nth-of-type(1) {
   flex: 1;
   background: none;
   text-align: left;
   padding: 10px;
 }
-
-section div#controls ul li button.hide {
+section div#controls > ul > li > button.hide {
   width: 25px;
   height: 25px;
   margin-right: 5px;
@@ -202,14 +168,30 @@ section div#controls ul li button.hide {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  background-color: rgba(43,130,203);
+  background-color: #2b82cb;
   border: none;
   font-weight: bold;
   color: white;
   display: none;
   margin-left: 10px;
 }
-
-section div#controls ul li.selected button.hide {
+section div#controls > ul > li.ghosted {
+  background-color: rgba(43, 130, 203, 0.5);
+}
+section div#controls > ul > li:hover {
+  background-color: rgba(43, 130, 203, 0.9);
+  border-color: white;
+}
+section div#controls > ul > li.selected {
+  background-color: #2b82cb;
+}
+section div#controls > ul > li.hidden {
+  display: none;
+}
+section div#controls > ul > li.selected > button.hide {
   display: block;
 }
+
+/* section */
+
+/*# sourceMappingURL=app.css.map */
