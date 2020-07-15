@@ -160,6 +160,7 @@ function(
         }
         
         function table_onItemHide(event) {
+			_view.padding = getPadding();
             loadMarkers();
             if (_table.getVisibleRecords().length === 1) {
 				var data = _table.getVisibleRecords().shift();
