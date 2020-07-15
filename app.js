@@ -212,12 +212,23 @@ function(
 
         function getPadding()
         {
-            return {
-                left: $("div#controls").outerWidth() + parseInt($("div#controls").position().left),
-				top: 0,
-                right: 0,
-                bottom: $("div#map").outerHeight() - $("button#rate").position().top
-            };
+			var padding;
+			if (parseInt($("div#controls").css("bottom")) === 0) {
+				padding = {
+	                left: 0,
+					top: 0,
+	                right: 0,
+	                bottom: $("div#controls").outerHeight()
+	            };  
+			} else {
+				padding = {
+	                left: $("div#controls").outerWidth() + parseInt($("div#controls").position().left),
+					top: 0,
+	                right: 0,
+	                bottom: $("div#map").outerHeight() - $("button#rate").position().top
+	            };  
+			}
+            return padding;
         }
 		
     });

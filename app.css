@@ -10,6 +10,12 @@ body {
   align-items: center;
 }
 
+@media (max-width: 800px) {
+  h1 {
+    font-size: 24px;
+  }
+}
+
 section {
   width: 100%;
   flex: 1;
@@ -117,6 +123,15 @@ section div#controls {
   max-height: calc(100% - 35px);
   overflow: hidden;
   /* ul */
+}
+@media (max-width: 800px) {
+  section div#controls {
+    top: auto;
+    left: auto;
+    bottom: 0px;
+    max-height: 50%;
+    width: 100%;
+  }
 }
 section div#controls > h3 {
   margin-top: 5px;

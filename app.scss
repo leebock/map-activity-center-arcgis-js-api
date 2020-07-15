@@ -10,6 +10,12 @@ body {
   align-items: center;
 }
 
+h1 {
+  @media (max-width: 800px) {
+    font-size: 24px;
+  }
+}
+
 section {
   
   width: 100%;
@@ -132,6 +138,14 @@ section {
     width: 300px;
     max-height: calc(100% - 35px);
     overflow: hidden;
+    
+    @media (max-width: 800px) {
+      top: auto;
+      left: auto;
+      bottom: 0px;
+      max-height: 50%;
+      width: 100%;
+    }
     
     & > h3 {
       margin-top: 5px;
