@@ -117,7 +117,7 @@ function(
 		
 		// create attribution div whose position can be tweaked
 		
-		$("<div>").attr("id", "my-attribution").appendTo($("section"));
+		$("<div>").attr("id", "my-attribution").appendTo($("section:first-of-type()"));
 			
 		new Attribution({view: _view, container: $("div#my-attribution").get(0)});
 
@@ -130,7 +130,7 @@ function(
 			_view.hitTest(event).then(
 				function(response) {
 					$("#map").css("cursor", "default");
-					$("div.tooltip").hide();
+					_toolTip.hide();
 					if (response.results.length === 0) {
 						_table.clearActive();
 						loadMarkers();
@@ -159,7 +159,7 @@ function(
 							_toolTip.hide();
 						} else {
 							var screenPoint = _view.toScreen(new Point(data.latLng.slice().reverse()));
-							_toolTip.show(data.name, screenPoint);
+							_toolTip.show(data.name, screenPoint.x, screenPoint.y);
 						}
 					} else {
 						$("#map").css("cursor", "default");

@@ -99,49 +99,60 @@
 			background-color: rgba(255,255,255,0.6);
 			position: absolute;
 			pointer-events: none;
-			padding: 5px;
+			padding: 4px;
 			box-shadow: 0 1px 4px rgba(0, 0, 0, .8);
 			display: none;
+			white-space: nowrap;
 		}
 
 		.tooltip.upper-right {
-			margin-bottom: 40px;
-			margin-left: 10px;
+			transform: translate(0, -100%);
+			margin-left: 4px;
+			margin-top: -44px;
 		}
 		
 		.tooltip.upper-center {
-			margin-bottom: 40px;
-			transform: translateX(-50%);
+			transform: translate(-50%, -100%);
+			margin-left: 0px;
+			margin-top: -44px;
 		}
 
 		.tooltip.upper-left {
-			margin-bottom: 40px;
-			transform: translateX(-100%);
+			transform: translate(-100%, -100%);
+			margin-left: -4px;
+			margin-top: -44px;
 		}
-		
-		.tooltip.center-right {
-			margin-bottom: 10px;
-			margin-left: 20px;
-		}
-
+				
 		.tooltip.center-left {
-			margin-bottom: 10px;
-			margin-left: -20px;
-			transform: translateX(-100%);
+			transform: translate(-100%, -50%);
+			margin-left: -15px;
+			margin-top: -22px;
 		}
 
 		.tooltip.bottom-left {
-			margin-bottom: -20px;
-			margin-left: -20px;
-			transform: translateX(-100%);
+			transform: translate(-100%, 0);
+			margin-left: -4px;
+			margin-top: 4px;
 		}
 
 		.tooltip.bottom-center {
-			margin-bottom: -20px;
-			margin-left: -20px;
-			transform: translateX(-50%);
+			transform: translate(-50%, 0);
+			margin-left: 0px;
+			margin-top: 4px;
 		}
-			
+
+		.tooltip.bottom-right {
+			transform: translate(0, 0);
+			margin-left: 4px;
+			margin-top: 4px;
+		}
+
+		.tooltip.center-right {
+			transform: translate(0, -50%);
+			margin-left: 15px;
+			margin-top: -22px;
+		}
+
 	</style>	
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

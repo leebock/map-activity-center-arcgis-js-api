@@ -10,22 +10,23 @@ Tooltip.prototype.hide = function()
 	this._div.hide();	
 }
 
-Tooltip.prototype.show = function(text, screenPoint)
+Tooltip.prototype.show = function(text, x, y)
 {
 	
 	this._div
 		.text(text)
-		.css("left", parseInt(screenPoint.x))
-		.css("bottom", $("#map").outerHeight() - (parseInt(screenPoint.y)));
+		.css("left", parseInt(x))
+		.css("top", parseInt(y));
 		
 	var classes = [
 		"upper-right",
 		"upper-center",
 		"upper-left",
-		"center-right",
 		"center-left",
 		"bottom-left",
-		"bottom-center"
+		"bottom-center",
+		"bottom-right",
+		"center-right",
 	];
 	
 	this._div.show();
@@ -42,14 +43,22 @@ Tooltip.prototype.show = function(text, screenPoint)
 				
 	function isWithin(div, container)
 	{
+		
 		var boundaryRight = $(container).outerWidth();
-		var boundaryTop = 0;			
-		var right = parseInt(div.position().left)+div.outerWidth();
-		if ($("div.tooltip").css("transform") !== "none") {
-			right = right + parseInt($("div.tooltip").css("transform").split(/[()]/)[1].split(',')[4]);
-		}
-		right = right + parseInt($("div.tooltip").css("margin-left"));
-		return boundaryRight > right && $("div.tooltip").position().top > boundaryTop;
+		var boundaryLeft = 0;
+		var boundaryTop = 0;
+		var boundaryBottom = $(container).outerHeight();
+		
+		var left = parseInt(div.position().left)+parseInt(div.css("margin-left"));
+		var right = left+parseInt(div.outerWidth());
+		var spitze = parseInt(div.position().top)+parseInt(div.css("margin-top"));
+		var bottom = spitze+parseInt(div.outerHeight());
+		
+		return right < boundaryRight &&
+				left > boundaryLeft && 
+				spitze > boundaryTop && 
+				bottom < boundaryBottom;
+		
 	}
 
 }
