@@ -1,6 +1,5 @@
 function Tooltip(container)
 {
-	var _self = this;
 	this._container = container;
 	this._div = $("<div>").addClass("tooltip").attr("role", "tooltip").appendTo(container);
 }
@@ -8,7 +7,7 @@ function Tooltip(container)
 Tooltip.prototype.hide = function()
 {
 	this._div.hide();	
-}
+};
 
 Tooltip.prototype.show = function(text, x, y)
 {
@@ -61,5 +60,5 @@ Tooltip.prototype.show = function(text, x, y)
 		
 	}
 
-}
+};
 
